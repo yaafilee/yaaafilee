@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Наша годовщина</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ФЕЙЕРВЕРК -->
+    <canvas id="fireworks"></canvas>
+
+
+    <!-- СЧЁТЧИК -->
+    <div class="text">
+        <div id="timer">23:59:55</div>
+
+        <h1 id="message">
+            <p>Сегодня ровно год как ты и я вместе!!</p>
+            <p>(листай вниз котик)</p>
+        </h1>
+    </div>
+
+
+    <!-- ЛЕПЕСТКИ -->
+    <div class="petal petal1"></div>
+    <div class="petal petal2"></div>
+    <div class="petal petal3"></div>
+    <div class="petal petal4"></div>
+    <div class="petal petal5"></div>
+    <div class="petal petal6"></div>
+    <div class="petal petal7"></div>
+    <div class="petal petal8"></div>
+    <div class="petal petal9"></div>
+    <div class="petal petal10"></div>
+    <div class="petal petal11"></div>
+    <div class="petal petal12"></div>
+
+
+    <!-- ИСТОРИЯ -->
+    <div class="history">
+
+        <h2>Наша история</h2>
+
+        <p>
+            Наша история началась, конечно, не с сакур и их романтично
+            падающих лепестков, а с солнечной и яркой осени...
+        </p>
+
+        <p>
+            Всё началось 10 октября 2025 года...
+        </p>
+
+        <p>
+            И тогда мы ещё даже не знали, сколько всего нам предстоит
+            пережить, сколько моментов запомнить и сколько всего пройти вместе.
+        </p>
+
+        <p>
+            Здесь будет продолжение нашей истории...
+        </p>
+
+    </div>
+
+
+    <script>
+
+        let seconds = 55;
+
+        let timer = document.getElementById("timer");
+        let message = document.getElementById("message");
+
+        let countdown = setInterval(function() {
+
+            if (seconds < 60) {
+
+                timer.textContent =
+                    "23:59:" + String(seconds).padStart(2, "0");
+
+                seconds++;
+
+            } else {
+
+                timer.textContent = "24:00:00";
+
+                clearInterval(countdown);
+
+                message.style.display = "block";
+
+                startFireworks();
+            }
+
+        }, 1000);
+
+
+        /* =========================
+           ФЕЙЕРВЕРК
+        ========================= */
+
+        let canvas = document.getElementById("fireworks");
+        let ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        let fireworksRunning = false;
+        let fireworksStart;
+
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+
+
+        function createFirework() {
+
+            let x = Math.random() * canvas.width;
+
+            let y = Math.random() * canvas.height * 0.55 + 50;
+
+            let colors = [
+                "#ff5c8a",
+                "#ffd166",
+                "#ffffff",
+                "#ff9f1c",
+                "#c77dff",
+                "#70d6ff"
+            ];
+
+            let color = colors[Math.floor(Math.random() * colors.length)];
+
+            for (let i = 0; i < 80; i++) {
+
+                let angle = Math.random() * Math.PI * 2;
+
+                let speed = Math.random() * 6 + 2;
+
+                particles.push({
+                    x: x,
+                    y: y,
+
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+
+                    life: 100,
+
+                    color: color,
+
+                    size: Math.random() * 2 + 1
+                });
+            }
+        }
+
+
+        function drawFireworks() {
+
+            if (!fireworksRunning) {
+                return;
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+
+                let p = particles[i];
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                p.vy += 0.04;
+
+                p.vx *= 0.98;
+                p.vy *= 0.98;
+
+                p.life--;
+
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    p.x,
+                    p.y,
+                    p.size,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fillStyle = p.color;
+
+                ctx.globalAlpha = p.life / 100;
+
+                ctx.fill();
+
+
+                if (p.life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            ctx.globalAlpha = 1;
+
+
+            /* Новый взрыв каждые ~0.4 секунды */
+
+            if (Math.random() < 0.06) {
+                createFirework();
+            }
+
+
+            /* Фейерверк работает 5 секунд */
+
+            if (Date.now() - fireworksStart < 5000) {
+
+                requestAnimationFrame(drawFireworks);
+
+            } else {
+
+                fireworksRunning = false;
+
+                ctx.clearRect(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+            }
+        }
+
+
+        function startFireworks() {
+
+            fireworksRunning = true;
+
+            fireworksStart = Date.now();
+
+            /* Сразу несколько первых взрывов */
+
+            createFirework();
+            createFirework();
+            createFirework();
+
+            drawFireworks();
+        }
+
+    </script>
+
+</body>
+</html>

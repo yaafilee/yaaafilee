@@ -1,0 +1,223 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-image: url("https://i.pinimg.com/1200x/de/c8/b0/dec8b0191a7aa69bd8f983084d610a4f.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    font-family: Arial, sans-serif;
+    color: pink;
+
+    overflow-x: hidden;
+}
+
+
+/* ФЕЙЕРВЕРК */
+
+#fireworks {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+/* СЧЁТЧИК */
+
+.text {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+#timer {
+    font-size: 70px;
+    font-weight: bold;
+
+    text-shadow: 0 0 5px black;
+}
+
+
+#message {
+    display: none;
+
+    font-size: 35px;
+
+    text-shadow: 0 0 5px black;
+}
+
+
+/* ЛЕПЕСТКИ САКУРЫ */
+
+.petal {
+    position: fixed;
+
+    width: 20px;
+    height: 15px;
+
+    background: hotpink;
+
+    border-radius: 100% 0 100% 0;
+
+    top: -20px;
+
+    opacity: 0.9;
+
+    animation: fall 7s linear infinite;
+
+    z-index: 3;
+}
+
+
+.petal1 {
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.petal2 {
+    left: 15%;
+    animation-delay: 2s;
+    animation-duration: 9s;
+}
+
+.petal3 {
+    left: 25%;
+    animation-delay: 4s;
+    animation-duration: 8s;
+}
+
+.petal4 {
+    left: 35%;
+    animation-delay: 1s;
+}
+
+.petal5 {
+    left: 45%;
+    animation-delay: 3s;
+    animation-duration: 10s;
+}
+
+.petal6 {
+    left: 55%;
+    animation-delay: 5s;
+}
+
+.petal7 {
+    left: 65%;
+    animation-delay: 2s;
+    animation-duration: 8s;
+}
+
+.petal8 {
+    left: 75%;
+    animation-delay: 4s;
+}
+
+.petal9 {
+    left: 85%;
+    animation-delay: 1s;
+    animation-duration: 9s;
+}
+
+.petal10 {
+    left: 95%;
+    animation-delay: 3s;
+}
+
+.petal11 {
+    left: 30%;
+    animation-delay: 6s;
+    animation-duration: 11s;
+}
+
+.petal12 {
+    left: 80%;
+    animation-delay: 5s;
+    animation-duration: 10s;
+}
+
+
+/* ПАДЕНИЕ ЛЕПЕСТКОВ */
+
+@keyframes fall {
+
+    0% {
+        top: -20px;
+        transform: translateX(0) rotate(0deg);
+    }
+
+    25% {
+        margin-left: 40px;
+    }
+
+    50% {
+        margin-left: -30px;
+    }
+
+    75% {
+        margin-left: 50px;
+    }
+
+    100% {
+        top: 100vh;
+        transform: translateX(-30px) rotate(360deg);
+    }
+
+}
+
+
+/* ИСТОРИЯ */
+
+.history {
+    width: 70%;
+    max-width: 800px;
+
+    margin: 0 auto;
+
+    padding: 80px 40px 150px;
+
+    text-align: center;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.history h2 {
+    font-size: 45px;
+
+    margin-bottom: 50px;
+
+    text-shadow: 0 0 5px black;
+}
+
+
+.history p {
+    font-size: 30px;
+
+    margin-bottom: 50px;
+
+    text-shadow: 0 0 5px black;
+}
